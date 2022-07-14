@@ -32,9 +32,9 @@ public class ControllerWeb {
      */
     @PostMapping(value = "/pict")
     public @ResponseBody String sendImage(@RequestBody TextEntity textEntity) {
-//        log.info("Receive POST Request");
-//        createPicture.createPicture(textEntity.getText());
-//        log.info("Send Response from POST Request");
+        log.info("Receive POST Request");
+        createPicture.createPicture(textEntity.getText());
+        log.info("Send Response from POST Request");
         return getClass().getClassLoader().getResource("logback.xml").getPath();
     }
 
