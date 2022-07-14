@@ -1,8 +1,11 @@
-package ru.liga.oldpictserv.controller;
+package ru.liga.oldpictserv.controller.entity;
+
+import org.springframework.stereotype.Component;
 
 /**
  * Текст входящий
  */
+@Component
 public class TextEntity {
 
     private String text;

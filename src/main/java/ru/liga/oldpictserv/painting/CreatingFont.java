@@ -1,13 +1,14 @@
 package ru.liga.oldpictserv.painting;
 
 import org.springframework.stereotype.Service;
+import ru.liga.oldpictserv.painting.enity.LineEntity;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.List;
+import java.util.Objects;
 
-import static ru.liga.oldpictserv.constant.ConstantUtil.OLDSTANDART_BOLD_PATH;
-import static ru.liga.oldpictserv.constant.ConstantUtil.OLDSTANDART_REG_PATH;
+import static ru.liga.oldpictserv.constant.ConstantUtil.*;
 
 @Service
 public class CreatingFont {
@@ -34,22 +35,24 @@ public class CreatingFont {
 
     public CreatingFont() {
         try {
-            Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream(OLDSTANDART_BOLD_PATH));
-            this.mainFontB = new Font("Old Standard TT", Font.BOLD, 50);
-            Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream(OLDSTANDART_REG_PATH));
-            this.mainFont = new Font("Old Standard TT", Font.PLAIN, 45);
+            Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(getClass().getResourceAsStream(OLDSTANDART_BOLD_PATH)));
+            this.mainFontB = new Font("Old Standard TT", Font.BOLD, DEF_FONT_BOLD);
+            Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(getClass().getResourceAsStream(OLDSTANDART_REG_PATH)));
+            this.mainFont = new Font("Old Standard TT", Font.PLAIN, DEF_FONT_REG);
         } catch (FontFormatException | IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public Font getFont(BufferedImage image, Font f, double expectedHeight) {
-        final boolean textFits = image.getHeight() < expectedHeight;
-        Font newFont = f;
-        if (textFits) {
-            final double heightBasedFontSize = (f.getSize2D() * image.getHeight()) / expectedHeight;
-            newFont = f.deriveFont(f.getStyle(), (float) heightBasedFontSize);
+
+    public void fillLinesEntityByFont(List<LineEntity> lineEntityList) {
+        for (LineEntity lineEntity : lineEntityList) {
+            if (lineEntity.getDescriptor().equals("body")) {
+                lineEntity.setFont(mainFont);
+            }
+            if (lineEntity.getDescriptor().equals("header")) {
+                lineEntity.setFont(mainFontB);
+            }
         }
-        return newFont;
     }
 }

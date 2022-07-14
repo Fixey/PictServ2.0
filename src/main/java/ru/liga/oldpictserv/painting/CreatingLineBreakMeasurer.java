@@ -1,17 +1,19 @@
 package ru.liga.oldpictserv.painting;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.liga.oldpictserv.painting.enity.LineEntity;
 
-import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.font.LineBreakMeasurer;
 import java.text.AttributedString;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
+
+import static ru.liga.oldpictserv.constant.ConstantUtil.COLOUR_TEXT;
 
 @Service
+@Slf4j
 public class CreatingLineBreakMeasurer {
     final private AttributeText attributeText;
 
@@ -21,25 +23,17 @@ public class CreatingLineBreakMeasurer {
     }
 
     /**
-     * Сфофрмировать список стилей налоеженных на текст
+     * Заполняет сущность линий списком стилей налоеженных на текст
      *
-     * @param mapText   текст (заголовок, тело)
-     * @param mainFont  стиль для тела
-     * @param mainFontB сталь для заголовка
-     * @param frc       класс для корректного изображения
-     * @return List<LineBreakMeasurer> писок стилей налоеженных на текст
+     * @param lineEntityList сущность линий
+     * @param frc            класс для корректного изображения
      */
-    public List<LineBreakMeasurer> makeListLineBreakMeasurer(Map<String, String> mapText,
-                                                             Font mainFont,
-                                                             Font mainFontB,
-                                                             FontRenderContext frc) {
-        AttributedString attributedHead = attributeText.getAttributedString(mapText.get("header"), mainFontB);
-        AttributedString attributedBody = attributeText.getAttributedString(mapText.get("body"), mainFont);
-        LineBreakMeasurer lineMeasurerHeader = new LineBreakMeasurer(attributedHead.getIterator(), frc);
-        LineBreakMeasurer lineMeasurerBody = new LineBreakMeasurer(attributedBody.getIterator(), frc);
-        List<LineBreakMeasurer> lineBreakMeasurersList = new LinkedList();
-        lineBreakMeasurersList.add(lineMeasurerHeader);
-        lineBreakMeasurersList.add(lineMeasurerBody);
-        return lineBreakMeasurersList;
+    public void fillLineEntityByLineBreakMeasurer(List<LineEntity> lineEntityList, FontRenderContext frc) {
+        for (LineEntity lineEntity : lineEntityList) {
+            log.debug("fill line Entity by LineBreakMeasurer. LineEntity={}", lineEntityList);
+            AttributedString attributed = attributeText.getAttributedString(lineEntity.getText(), lineEntity.getFont(), COLOUR_TEXT);
+            LineBreakMeasurer lineMeasurer = new LineBreakMeasurer(attributed.getIterator(), frc);
+            lineEntity.setLineBreakMeasurer(lineMeasurer);
+        }
     }
 }

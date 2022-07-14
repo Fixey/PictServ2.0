@@ -13,10 +13,11 @@ public class SendingPicture {
      * Хранимые файлы
      */
 
-    public String getImageBase64() {
+    public byte[] getImageBase64() {
         try {
             byte[] fileContent = FileUtils.readFileToByteArray(new File("temp/image.jpg"));
-            return Base64.getEncoder().encodeToString(fileContent);
+//            return Base64.getEncoder().encodeToString(fileContent);
+            return fileContent;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

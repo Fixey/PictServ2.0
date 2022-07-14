@@ -15,6 +15,6 @@ class CreatePictureTest {
                 "heights in Provence, his physical and mental health plummeted." +
                 "heights in Provence, his physical and mental health plummeted.";
         AttributeText attributeText = new AttributeText();
-        new CreatePicture(new CreatingFont(), new ParseText(), new CreatingTextLayout(), new CreatingLineBreakMeasurer(attributeText)).createPicture(text);
+        new CreatePicture(new CreatingFont(), new ParseText(), new CreatingTextLayout(), new CreatingLineBreakMeasurer(attributeText), new ChoosingFont()).createPicture(text);
     }
 }
