@@ -2,7 +2,10 @@ package ru.liga.oldpictserv.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import ru.liga.oldpictserv.controller.entity.TextEntity;
 import ru.liga.oldpictserv.painting.CreatePicture;
 import ru.liga.oldpictserv.sending.SendingPicture;
@@ -29,7 +32,8 @@ public class ControllerWeb {
      * @return String Картинка
      */
     @PostMapping(value = "/pict")
-    public @ResponseBody byte[] sendImage(@RequestBody TextEntity textEntity) {
+    @ResponseBody
+    public byte[] sendImage(TextEntity textEntity) {
         log.info("Receive POST Request");
         createPicture.createPicture(textEntity.getText());
         log.info("Send Response from POST Request");
