@@ -6,7 +6,10 @@ import ru.liga.oldpictserv.painting.enity.LineEntity;
 
 import java.awt.font.LineBreakMeasurer;
 import java.awt.font.TextLayout;
+import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -22,9 +25,11 @@ public class CreatingTextLayout {
         log.debug("fill line Entity by TextLayout.LineEntity={}", lineEntityList);
         for (LineEntity lineEntity : lineEntityList) {
             LineBreakMeasurer line = lineEntity.getLineBreakMeasurer();
+            lineEntity.setTextLayoutsList(new LinkedList<>());
+            lineEntity.setHigh(0);
             while (line.getPosition() < lineEntity.getText().length()) {
                 TextLayout textLayout = line.nextLayout(breakWidth);
-                lineEntity.setTextLayout(textLayout);
+                lineEntity.addTextLayout(textLayout);
             }
         }
         log.debug("After filling line Entity by TextLayout.lineEntityList={}", lineEntityList);

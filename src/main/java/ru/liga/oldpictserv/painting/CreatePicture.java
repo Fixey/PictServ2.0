@@ -103,11 +103,13 @@ public class CreatePicture {
         float y = (breakHeight - heightText) / 2;
         log.debug("Start draw lines.lineEntityList={},image height = {}, heightText={}",
                 lineEntityList, breakHeight, heightText);
-        for (LineEntity linesText : lineEntityList) {
-            TextLayout textLayout = linesText.getTextLayout();
-            float x = PADDING;
-            textLayout.draw(g2d, x, y + textLayout.getAscent());
-            y += textLayout.getAscent() + textLayout.getDescent() + textLayout.getLeading();
+        for (LineEntity lineEntity : lineEntityList) {
+            for (TextLayout textLayout : lineEntity.getTextLayoutsList()) {
+//            TextLayout textLayout = linesText.getTextLayout();
+                float x = PADDING;
+                textLayout.draw(g2d, x, y + textLayout.getAscent());
+                y += textLayout.getAscent() + textLayout.getDescent() + textLayout.getLeading();
+            }
         }
     }
 }

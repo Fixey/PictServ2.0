@@ -1,5 +1,6 @@
 package ru.liga.oldpictserv.painting.enity;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Component;
 import java.awt.*;
 import java.awt.font.LineBreakMeasurer;
 import java.awt.font.TextLayout;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Сущность текста
@@ -34,7 +37,7 @@ public class LineEntity {
     /**
      * Слои текста
      */
-    private TextLayout textLayout;
+    private List<TextLayout> textLayoutsList = new LinkedList<>();
     /**
      * Описание текста
      */
@@ -44,8 +47,13 @@ public class LineEntity {
      */
     private float high;
 
-    public void setTextLayout(TextLayout textLayout) {
-        this.textLayout = textLayout;
-        this.high = textLayout.getAscent() + textLayout.getDescent() + textLayout.getLeading();
+    public void addTextLayout(TextLayout textLayouts) {
+        if(this.textLayoutsList==null){
+            this.textLayoutsList = new LinkedList<>();
+            this.high = 0;
+        }
+        this.textLayoutsList.add(textLayouts);
+        this.high += textLayouts.getAscent() + textLayouts.getDescent() + textLayouts.getLeading();
+
     }
 }
