@@ -55,7 +55,8 @@ public class CreatePicture {
             log.info("Add text to picture");
             addTextToPicture(text, image);
             log.info("Added picture");
-            ImageIO.write(image, "jpg", new File(PATH_SAVING_PICTURE));
+            ImageIO.write(image, "jpg", new File(this.getClass()
+                    .getClassLoader().getResource("").getPath() + "image.jpg"));
         } catch (IOException | NullPointerException e) {
             log.error(e.getMessage(), e);
             throw new CreatePictureException();

@@ -17,7 +17,8 @@ public class SendingPicture {
 
     public byte[] getImageBase64() {
         try {
-            return FileUtils.readFileToByteArray(new File("temp/image.jpg"));
+            return FileUtils.readFileToByteArray(new File(this.getClass()
+                    .getClassLoader().getResource("").getPath() + "image.jpg"));
         } catch (IOException e) {
             log.error(e.getMessage(), e);
             throw new CantEncodingImageToBase64Excepted();
