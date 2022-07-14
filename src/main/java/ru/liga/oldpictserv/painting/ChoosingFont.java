@@ -25,7 +25,6 @@ public class ChoosingFont {
         final Float heightAllText = lineEntityList.stream().map(LineEntity::getHigh).reduce(Float::sum).orElseThrow(RuntimeException::new);
         if (heightImage < heightAllText) {
             for (LineEntity lineEntity : lineEntityList) {
-
                 final Font f = lineEntity.getFont();
                 final double heightBasedFontSize = (f.getSize2D() * heightImage) / heightAllText;
                 final Font newFont = f.deriveFont(f.getStyle(), (float) heightBasedFontSize);

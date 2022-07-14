@@ -34,6 +34,7 @@ public class ParseText {
             log.debug("finish parse and get lineEntityList:{}", lineEntityList);
             return lineEntityList;
         } catch (NullPointerException | IndexOutOfBoundsException e) {
+            log.error(e.getMessage(), e);
             throw new CantParseTextException();
         }
     }

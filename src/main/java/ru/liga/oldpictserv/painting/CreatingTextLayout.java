@@ -6,10 +6,8 @@ import ru.liga.oldpictserv.painting.enity.LineEntity;
 
 import java.awt.font.LineBreakMeasurer;
 import java.awt.font.TextLayout;
-import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j

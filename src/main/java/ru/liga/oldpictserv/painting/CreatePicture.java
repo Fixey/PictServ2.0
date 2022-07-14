@@ -57,6 +57,7 @@ public class CreatePicture {
             log.info("Added picture");
             ImageIO.write(image, "jpg", new File(PATH_SAVING_PICTURE));
         } catch (IOException | NullPointerException e) {
+            log.error(e.getMessage(), e);
             throw new CreatePictureException();
         }
     }
@@ -76,7 +77,7 @@ public class CreatePicture {
                 RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
         FontRenderContext frc = g2d.getFontRenderContext();
         lineEntityList = parseText.getLineEntityListByText(text);
-        creatingFont.fillLinesEntityByFont(lineEntityList);
+        creatingFont.fillLinesEntityByMainFont(lineEntityList);
         final int breakWidth = image.getWidth() - PADDING;
         final int breakHeight = image.getHeight();
         creatingLineBreakMeasurer.fillLineEntityByLineBreakMeasurer(lineEntityList, frc);
@@ -105,7 +106,6 @@ public class CreatePicture {
                 lineEntityList, breakHeight, heightText);
         for (LineEntity lineEntity : lineEntityList) {
             for (TextLayout textLayout : lineEntity.getTextLayoutsList()) {
-//            TextLayout textLayout = linesText.getTextLayout();
                 float x = PADDING;
                 textLayout.draw(g2d, x, y + textLayout.getAscent());
                 y += textLayout.getAscent() + textLayout.getDescent() + textLayout.getLeading();

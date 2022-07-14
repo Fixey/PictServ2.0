@@ -1,5 +1,6 @@
 package ru.liga.oldpictserv.painting;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.liga.oldpictserv.painting.enity.LineEntity;
 
@@ -10,11 +11,13 @@ import java.util.Objects;
 
 import static ru.liga.oldpictserv.constant.ConstantUtil.*;
 
+/**
+ * Создание шрифта
+ */
 @Service
+@Slf4j
 public class CreatingFont {
-
     private Font mainFontB;
-
     private Font mainFont;
 
     public Font getMainFontB() {
@@ -40,12 +43,17 @@ public class CreatingFont {
             Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(getClass().getResourceAsStream(OLDSTANDART_REG_PATH)));
             this.mainFont = new Font("Old Standard TT", Font.PLAIN, DEF_FONT_REG);
         } catch (FontFormatException | IOException e) {
+            log.error(e.getMessage(), e);
             throw new RuntimeException(e);
         }
     }
 
-
-    public void fillLinesEntityByFont(List<LineEntity> lineEntityList) {
+    /**
+     * Заполнение сущности линий Шрифтами
+     *
+     * @param lineEntityList List<LineEntity> список линий
+     */
+    public void fillLinesEntityByMainFont(List<LineEntity> lineEntityList) {
         for (LineEntity lineEntity : lineEntityList) {
             if (lineEntity.getDescriptor().equals("body")) {
                 lineEntity.setFont(mainFont);
