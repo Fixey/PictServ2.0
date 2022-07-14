@@ -1,52 +1,58 @@
 package ru.liga.oldpictserv.controller;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import net.minidev.json.JSONObject;
-import org.junit.BeforeClass;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
+import ru.liga.oldpictserv.painting.ChoosingFont;
+import ru.liga.oldpictserv.painting.CreatingFont;
+import ru.liga.oldpictserv.painting.CreatingLineBreakMeasurer;
+import ru.liga.oldpictserv.painting.CreatingTextLayout;
+import ru.liga.oldpictserv.painting.enity.LineEntity;
+import ru.liga.oldpictserv.parsetext.ParseText;
+import ru.liga.oldpictserv.sending.SendingPicture;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 //@AutoConfigureMockMvc
 public class ControllerWebTest {
-    public static String createPersonUrl;
-    public static String updatePersonUrl;
-    public static HttpHeaders headers;
-    public static RestTemplate restTemplate;
-    public static JSONObject personJsonObject;
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    final private CreatingFont creatingFont;
+    final private ParseText parseText;
+    final private CreatingTextLayout creatingTextLayout;
+    final private CreatingLineBreakMeasurer creatingLineBreakMeasurer;
+    final private ChoosingFont choosingFont;
+    final private SendingPicture sendingPicture;
+    private List<LineEntity> lineEntityList = new LinkedList();
 
-    @BeforeClass
-    public static void runBeforeAllTestMethods() {
-        createPersonUrl = "http://localhost:8080/pict";
-//        updatePersonUrl = "http://localhost:8082/spring-rest/updatePerson";
 
-        restTemplate = new RestTemplate();
-        headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        personJsonObject = new JSONObject();
-        personJsonObject.put("text", "John is Сударь");
+    @Autowired
+    public ControllerWebTest(CreatingFont creatingFont, ParseText parseText, CreatingTextLayout creatingTextLayout, CreatingLineBreakMeasurer creatingLineBreakMeasurer, ChoosingFont choosingFont, SendingPicture sendingPicture) {
+        this.creatingFont = creatingFont;
+        this.parseText = parseText;
+        this.creatingTextLayout = creatingTextLayout;
+        this.creatingLineBreakMeasurer = creatingLineBreakMeasurer;
+        this.choosingFont = choosingFont;
+        this.sendingPicture = sendingPicture;
     }
 
     @Test
     public void givenDataIsJson_whenDataIsPostedByPostForObject_thenResponseBodyIsNotNull()
             throws IOException {
-        createPersonUrl = "http://localhost:8080/pict";
-//        updatePersonUrl = "http://localhost:8082/spring-rest/updatePerson";
+        String createPersonUrl = "http://localhost:8080/pict";
 
-        restTemplate = new RestTemplate();
-        headers = new HttpHeaders();
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        personJsonObject = new JSONObject();
+        JSONObject personJsonObject = new JSONObject();
         personJsonObject.put("text", "John is Сударь");
         HttpEntity<String> request =
                 new HttpEntity<>(personJsonObject.toString(), headers);
@@ -54,25 +60,5 @@ public class ControllerWebTest {
         String personResultAsJsonStr =
                 restTemplate.postForObject(createPersonUrl, request, String.class);
         assertNotNull(personResultAsJsonStr);
-
     }
-//
-//    @Autowired
-//    private MockMvc mockMvc;
-//
-//    @Test
-//    public void noParamGreetingShouldReturnDefaultMessage() throws Exception {
-//
-//        this.mockMvc.perform(get("/pict")).andDo(print()).andExpect(status().isOk())
-//                .andExpect(jsonPath("$.content").value("Hello World"));
-//    }
-//
-//    @Test
-//    public void paramGreetingShouldReturnTailoredMessage() throws Exception {
-//
-//        this.mockMvc.perform(get("/todo").param("name", "Spring Community"))
-//                .andDo(print()).andExpect(status().isOk())
-//                .andExpect(jsonPath("$.content").value("Hello, Spring Community!"));
-//    }
-
 }
