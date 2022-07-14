@@ -29,11 +29,11 @@ public class ControllerWeb {
      * @return String Картинка
      */
     @PostMapping(value = "/pict")
-    public @ResponseBody byte[] sendImage(@RequestBody TextEntity textEntity) {
+    public @ResponseBody String sendImage(@RequestBody TextEntity textEntity) {
         log.info("Receive POST Request");
         createPicture.createPicture(textEntity.getText());
         log.info("Send Response from POST Request");
-        return sendingPicture.getImageBase64();
+        return "WTF";
     }
 
     /**
