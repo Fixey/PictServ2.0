@@ -7,7 +7,7 @@ import ru.liga.oldpictserv.controller.entity.TextEntity;
 import ru.liga.oldpictserv.painting.CreatePicture;
 import ru.liga.oldpictserv.sending.SendingPicture;
 
-import java.io.File;
+import java.io.InputStream;
 
 /**
  * Контроллер
@@ -31,11 +31,11 @@ public class ControllerWeb {
      * @return String Картинка
      */
     @PostMapping(value = "/pict")
-    public @ResponseBody byte[] sendImage(@RequestBody TextEntity textEntity) {
+    public @ResponseBody String sendImage(@RequestBody TextEntity textEntity) {
 //        log.info("Receive POST Request");
 //        createPicture.createPicture(textEntity.getText());
 //        log.info("Send Response from POST Request");
-        return new File("").getAbsoluteFile().toURI().toURL();
+        return getClass().getClassLoader().getResource("logback.xml").getPath();
     }
 
     /**
