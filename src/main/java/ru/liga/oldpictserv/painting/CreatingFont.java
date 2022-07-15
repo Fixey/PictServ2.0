@@ -24,10 +24,11 @@ public class CreatingFont {
 
     public CreatingFont() {
         try {
-            Font.createFont(Font.TRUETYPE_FONT, ClassLoader.getSystemClassLoader().getResourceAsStream(OLDSTANDART_BOLD_PATH));
-            this.mainFontB = new Font("Helvetica Neue", Font.BOLD, DEF_FONT_BOLD);
-            Font.createFont(Font.TRUETYPE_FONT, ClassLoader.getSystemClassLoader().getResourceAsStream(OLDSTANDART_REG_PATH));
-            this.mainFont = new Font("Helvetica Neue", Font.PLAIN, DEF_FONT_REG);
+            Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream(OLDSTANDART_BOLD_PATH));
+            log.debug(getClass().getClassLoader().getResourceAsStream(OLDSTANDART_BOLD_PATH).toString());
+            this.mainFontB = new Font("Old Standard TT", Font.BOLD, DEF_FONT_BOLD);
+            Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream(OLDSTANDART_REG_PATH));
+            this.mainFont = new Font("Old Standard TT", Font.PLAIN, DEF_FONT_REG);
         } catch (FontFormatException | IOException e) {
             log.error(e.getMessage(), e);
             throw new RuntimeException(e);
