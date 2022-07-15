@@ -84,7 +84,7 @@ public class PictureService {
                 RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
         FontRenderContext frc = g2d.getFontRenderContext();
         lineEntityList = parseText.getLineEntityListByText(text);
-        creatingFont.fillLinesEntityByMainFont(lineEntityList);
+        creatingFont.fillLinesEntityByMainFont(lineEntityList);//todo констнутор
         final int breakWidth = image.getWidth() - PADDING;
         final int breakHeight = image.getHeight();
         creatingLineBreakMeasurer.fillLineEntityByLineBreakMeasurer(lineEntityList, frc);
