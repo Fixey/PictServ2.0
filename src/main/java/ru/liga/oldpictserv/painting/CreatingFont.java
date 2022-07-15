@@ -1,6 +1,7 @@
 package ru.liga.oldpictserv.painting;
 
 import lombok.Data;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.liga.oldpictserv.entity.LineEntity;
@@ -40,7 +41,10 @@ public class CreatingFont {
      *
      * @param lineEntityList List<LineEntity> список линий
      */
+    @SneakyThrows
     public void fillLinesEntityByMainFont(List<LineEntity> lineEntityList) {
+        Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream(OLDSTANDART_BOLD_PATH));
+        log.debug(getClass().getClassLoader().getResourceAsStream(OLDSTANDART_BOLD_PATH).toString());
         for (LineEntity lineEntity : lineEntityList) {
             if (lineEntity.getDescriptor().equals(TextType.body)) {
                 lineEntity.setFont(mainFont);
