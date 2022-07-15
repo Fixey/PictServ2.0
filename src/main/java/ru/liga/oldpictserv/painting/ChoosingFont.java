@@ -2,7 +2,7 @@ package ru.liga.oldpictserv.painting;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.liga.oldpictserv.painting.enity.LineEntity;
+import ru.liga.oldpictserv.entity.LineEntity;
 
 import java.awt.*;
 import java.util.List;

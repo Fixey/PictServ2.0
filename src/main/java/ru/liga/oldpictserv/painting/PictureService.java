@@ -3,8 +3,9 @@ package ru.liga.oldpictserv.painting;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.liga.oldpictserv.painting.enity.LineEntity;
-import ru.liga.oldpictserv.painting.exception.CreatePictureException;
+import ru.liga.oldpictserv.entity.LineEntity;
+import ru.liga.oldpictserv.entity.TempImageEntity;
+import ru.liga.oldpictserv.exception.CreatePictureException;
 import ru.liga.oldpictserv.parsetext.ParseText;
 
 import javax.imageio.ImageIO;
@@ -12,34 +13,37 @@ import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.image.BufferedImage;
-import java.io.File;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 
-import static ru.liga.oldpictserv.constant.ConstantUtil.*;
+import static ru.liga.oldpictserv.constant.ConstantUtil.BACKGROUND_PATH;
+import static ru.liga.oldpictserv.constant.ConstantUtil.PADDING;
 
 /**
- * Создание картинки
+ * Сервис по работе с картинкой
  */
 @Service
 @Slf4j
-public class CreatePicture {
-    final private CreatingFont creatingFont;
-    final private ParseText parseText;
-    final private CreatingTextLayout creatingTextLayout;
-    final private CreatingLineBreakMeasurer creatingLineBreakMeasurer;
-    final private ChoosingFont choosingFont;
+public class PictureService {
+    private final CreatingFont creatingFont;
+    private final ParseText parseText;
+    private final CreatingTextLayout creatingTextLayout;
+    private final CreatingLineBreakMeasurer creatingLineBreakMeasurer;
+    private final ChoosingFont choosingFont;
+    private final TempImageEntity tempImageEntity;
     private List<LineEntity> lineEntityList = new LinkedList();
 
     @Autowired
-    public CreatePicture(CreatingFont creatingFont, ParseText parseText, CreatingTextLayout creatingTextLayout, CreatingLineBreakMeasurer creatingLineBreakMeasurer, ChoosingFont choosingFont) {
+    public PictureService(CreatingFont creatingFont, ParseText parseText, CreatingTextLayout creatingTextLayout, CreatingLineBreakMeasurer creatingLineBreakMeasurer, ChoosingFont choosingFont, TempImageEntity tempImageEntity) {
         this.creatingFont = creatingFont;
         this.parseText = parseText;
         this.creatingTextLayout = creatingTextLayout;
         this.creatingLineBreakMeasurer = creatingLineBreakMeasurer;
         this.choosingFont = choosingFont;
+        this.tempImageEntity = tempImageEntity;
     }
 
     /**
@@ -48,15 +52,17 @@ public class CreatePicture {
      * @param text текст
      */
     public void createPicture(String text) {
-        try {
-            log.info("Choose background");
-            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(BACKGROUND_PATH);
+        log.info("Choose background");
+        try (
+                InputStream inputStream = getClass().getClassLoader().getResourceAsStream(BACKGROUND_PATH);
+        ) {
             BufferedImage image = ImageIO.read(inputStream);
             log.info("Add text to picture");
             addTextToPicture(text, image);
             log.info("Added picture");
-//            ImageIO.write(image, "jpg", new File(this.getClass()
-//                    .getClassLoader().getResource("").getPath() + "image.jpg"));
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ImageIO.write(image, "jpg", bos);
+            tempImageEntity.setBytesImage(bos.toByteArray());
         } catch (IOException | NullPointerException e) {
             log.error(e.getMessage(), e);
             throw new CreatePictureException();

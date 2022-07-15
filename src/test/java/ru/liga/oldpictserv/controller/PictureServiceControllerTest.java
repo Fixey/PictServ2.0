@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 //@AutoConfigureMockMvc
-public class ControllerWebTest {
+public class PictureServiceControllerTest {
 
     @Test
     public void givenDataIsJson_whenDataIsPostedByPostForObject_thenResponseBodyIsNotNull()

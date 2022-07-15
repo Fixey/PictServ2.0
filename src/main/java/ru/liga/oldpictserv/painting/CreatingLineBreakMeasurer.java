@@ -3,7 +3,7 @@ package ru.liga.oldpictserv.painting;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.liga.oldpictserv.painting.enity.LineEntity;
+import ru.liga.oldpictserv.entity.LineEntity;
 
 import java.awt.font.FontRenderContext;
 import java.awt.font.LineBreakMeasurer;
@@ -15,7 +15,7 @@ import static ru.liga.oldpictserv.constant.ConstantUtil.COLOUR_TEXT;
 @Service
 @Slf4j
 public class CreatingLineBreakMeasurer {
-    final private AttributeText attributeText;
+    private final AttributeText attributeText;
 
     @Autowired
     public CreatingLineBreakMeasurer(AttributeText attributeText) {

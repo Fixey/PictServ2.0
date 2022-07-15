@@ -1,8 +1,10 @@
 package ru.liga.oldpictserv.painting;
 
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.liga.oldpictserv.painting.enity.LineEntity;
+import ru.liga.oldpictserv.entity.LineEntity;
+import ru.liga.oldpictserv.enums.TextType;
 
 import java.awt.*;
 import java.io.IOException;
@@ -16,25 +18,10 @@ import static ru.liga.oldpictserv.constant.ConstantUtil.*;
  */
 @Service
 @Slf4j
+@Data
 public class CreatingFont {
     private Font mainFontB;
     private Font mainFont;
-
-    public Font getMainFontB() {
-        return mainFontB;
-    }
-
-    public void setMainFontB(Font mainFontB) {
-        this.mainFontB = mainFontB;
-    }
-
-    public Font getMainFont() {
-        return mainFont;
-    }
-
-    public void setMainFont(Font mainFont) {
-        this.mainFont = mainFont;
-    }
 
     public CreatingFont() {
         try {
@@ -55,10 +42,10 @@ public class CreatingFont {
      */
     public void fillLinesEntityByMainFont(List<LineEntity> lineEntityList) {
         for (LineEntity lineEntity : lineEntityList) {
-            if (lineEntity.getDescriptor().equals("body")) {
+            if (lineEntity.getDescriptor().equals(TextType.body)) {
                 lineEntity.setFont(mainFont);
             }
-            if (lineEntity.getDescriptor().equals("header")) {
+            if (lineEntity.getDescriptor().equals(TextType.header)) {
                 lineEntity.setFont(mainFontB);
             }
         }

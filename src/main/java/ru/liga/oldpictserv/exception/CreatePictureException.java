@@ -1,4 +1,4 @@
-package ru.liga.oldpictserv.painting.exception;
+package ru.liga.oldpictserv.exception;
 
 public class CreatePictureException extends RuntimeException {
     public CreatePictureException() {

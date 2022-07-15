@@ -3,25 +3,27 @@ package ru.liga.oldpictserv;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import ru.liga.oldpictserv.entity.TempImageEntity;
 import ru.liga.oldpictserv.painting.*;
 import ru.liga.oldpictserv.parsetext.ParseText;
-import ru.liga.oldpictserv.sending.SendingPicture;
 
 @SpringBootTest
-class CreatePictureTest {
-    final private CreatingFont creatingFont;
-    final private ParseText parseText;
-    final private CreatingTextLayout creatingTextLayout;
-    final private CreatingLineBreakMeasurer creatingLineBreakMeasurer;
-    final private ChoosingFont choosingFont;
+class PictureServiceTest {
+    private final CreatingFont creatingFont;
+    private final ParseText parseText;
+    private final CreatingTextLayout creatingTextLayout;
+    private final CreatingLineBreakMeasurer creatingLineBreakMeasurer;
+    private final ChoosingFont choosingFont;
+    private final TempImageEntity tempImageEntity;
 
     @Autowired
-    public CreatePictureTest(CreatingFont creatingFont, ParseText parseText, CreatingTextLayout creatingTextLayout, CreatingLineBreakMeasurer creatingLineBreakMeasurer, ChoosingFont choosingFont, AttributeText attributeText, SendingPicture sendingPicture) {
+    public PictureServiceTest(CreatingFont creatingFont, ParseText parseText, CreatingTextLayout creatingTextLayout, CreatingLineBreakMeasurer creatingLineBreakMeasurer, ChoosingFont choosingFont, TempImageEntity tempImageEntity) {
         this.creatingFont = creatingFont;
         this.parseText = parseText;
         this.creatingTextLayout = creatingTextLayout;
         this.creatingLineBreakMeasurer = creatingLineBreakMeasurer;
         this.choosingFont = choosingFont;
+        this.tempImageEntity = tempImageEntity;
     }
 
     @Test
@@ -32,7 +34,7 @@ class CreatePictureTest {
                 "work of all. However, as his artistic brilliance reached new " +
                 "kjhjkhjk heights in Provence, his physical and mental health plummeted." +
                 "heights in Provence, his physical and mental health plummeted.";
-        new CreatePicture(creatingFont, parseText, creatingTextLayout,
-                creatingLineBreakMeasurer, choosingFont).createPicture(text);
+        new PictureService(creatingFont, parseText, creatingTextLayout,
+                creatingLineBreakMeasurer, choosingFont, tempImageEntity).createPicture(text);
     }
 }

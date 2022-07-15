@@ -2,11 +2,11 @@ package ru.liga.oldpictserv.painting;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.liga.oldpictserv.painting.enity.LineEntity;
+import ru.liga.oldpictserv.entity.LineEntity;
 
 import java.awt.font.LineBreakMeasurer;
 import java.awt.font.TextLayout;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,7 +23,7 @@ public class CreatingTextLayout {
         log.debug("fill line Entity by TextLayout.LineEntity={}", lineEntityList);
         for (LineEntity lineEntity : lineEntityList) {
             LineBreakMeasurer line = lineEntity.getLineBreakMeasurer();
-            lineEntity.setTextLayoutsList(new LinkedList<>());
+            lineEntity.setTextLayoutsList(new ArrayList<>());
             lineEntity.setHigh(0);
             while (line.getPosition() < lineEntity.getText().length()) {
                 TextLayout textLayout = line.nextLayout(breakWidth);
