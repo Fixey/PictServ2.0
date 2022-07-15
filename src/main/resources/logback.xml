@@ -25,6 +25,7 @@
 
     <root lavel="debug">
         <appender-ref ref="fileAppender"/>
+        <appender-ref ref="consoleAppender"/>
     </root>
 <!--    <logger  name="ru.liga" level="debug" additivity="false">-->
 <!--        <appender-ref ref="fileAppender"/>-->
