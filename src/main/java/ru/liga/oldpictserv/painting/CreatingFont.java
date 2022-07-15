@@ -25,9 +25,9 @@ public class CreatingFont {
 
     public CreatingFont() {
         try {
-            Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream(OLDSTANDART_BOLD_PATH)));
+            Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream(OLDSTANDART_BOLD_PATH));
             this.mainFontB = new Font("Old Standard TT", Font.BOLD, DEF_FONT_BOLD);
-            Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream(OLDSTANDART_REG_PATH)));
+            Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream(OLDSTANDART_REG_PATH));
             this.mainFont = new Font("Old Standard TT", Font.PLAIN, DEF_FONT_REG);
         } catch (FontFormatException | IOException e) {
             log.error(e.getMessage(), e);
