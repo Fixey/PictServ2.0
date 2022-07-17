@@ -48,7 +48,7 @@ public class CreatingFont {
             if (lineEntity.getDescriptor().equals(TextType.body)) {
                 lineEntity.setFont(mainFont);
             }
-            
+
             if (lineEntity.getDescriptor().equals(TextType.header)) {
                 lineEntity.setFont(mainFontB);
             }
