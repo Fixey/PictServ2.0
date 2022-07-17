@@ -44,6 +44,11 @@ public class CreatingFont {
      */
     @SneakyThrows
     public void fillLinesEntityByMainFont(List<LineEntity> lineEntityList) {
+        this.mainFontB = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream(OLDSTANDART_BOLD_PATH));
+        this.mainFontB = mainFontB.deriveFont(this.mainFontB.getStyle(), 50f);
+        log.debug(getClass().getClassLoader().getResourceAsStream(OLDSTANDART_BOLD_PATH).toString());
+        this.mainFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream(OLDSTANDART_REG_PATH));
+        this.mainFont = mainFont.deriveFont(this.mainFont.getStyle(), 45f);
         for (LineEntity lineEntity : lineEntityList) {
             if (lineEntity.getDescriptor().equals(TextType.body)) {
                 lineEntity.setFont(mainFont);
