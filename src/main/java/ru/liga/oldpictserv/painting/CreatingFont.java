@@ -11,7 +11,8 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.List;
 
-import static ru.liga.oldpictserv.constant.ConstantUtil.*;
+import static ru.liga.oldpictserv.constant.ConstantUtil.OLDSTANDART_BOLD_PATH;
+import static ru.liga.oldpictserv.constant.ConstantUtil.OLDSTANDART_REG_PATH;
 
 /**
  * Создание шрифта
@@ -25,11 +26,13 @@ public class CreatingFont {
 
     public CreatingFont() {
         try {
-            Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream(OLDSTANDART_BOLD_PATH));
+            this.mainFontB = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream(OLDSTANDART_BOLD_PATH));
+            this.mainFontB = mainFontB.deriveFont(this.mainFontB.getStyle(), 35f);
             log.debug(getClass().getClassLoader().getResourceAsStream(OLDSTANDART_BOLD_PATH).toString());
-            this.mainFontB = new Font("Old Standard TT", Font.BOLD, DEF_FONT_BOLD);
-            Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream(OLDSTANDART_REG_PATH));
-            this.mainFont = new Font("Old Standard TT", Font.PLAIN, DEF_FONT_REG);
+//            this.mainFontB = new Font("Old Standard TT", Font.BOLD, DEF_FONT_BOLD);
+            this.mainFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream(OLDSTANDART_REG_PATH));
+            this.mainFont = mainFont.deriveFont(this.mainFont.getStyle(), 35f);
+//            this.mainFont = new Font("Old Standard TT", Font.PLAIN, DEF_FONT_REG);
         } catch (FontFormatException | IOException e) {
             log.error(e.getMessage(), e);
             throw new RuntimeException(e);
@@ -43,11 +46,11 @@ public class CreatingFont {
      */
     @SneakyThrows
     public void fillLinesEntityByMainFont(List<LineEntity> lineEntityList) {
-        Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream(OLDSTANDART_BOLD_PATH));
-        log.debug(getClass().getClassLoader().getResourceAsStream(OLDSTANDART_BOLD_PATH).toString());
-        this.mainFontB = new Font("Old Standard TT", Font.BOLD, DEF_FONT_BOLD);
-        Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream(OLDSTANDART_REG_PATH));
-        this.mainFont = new Font("Old Standard TT", Font.PLAIN, DEF_FONT_REG);
+//        Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream(OLDSTANDART_BOLD_PATH));
+//        log.debug(getClass().getClassLoader().getResourceAsStream(OLDSTANDART_BOLD_PATH).toString());
+//        this.mainFontB = new Font("Old Standard TT", Font.BOLD, DEF_FONT_BOLD);
+//        Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream(OLDSTANDART_REG_PATH));
+//        this.mainFont = new Font("Old Standard TT", Font.PLAIN, DEF_FONT_REG);
         for (LineEntity lineEntity : lineEntityList) {
             if (lineEntity.getDescriptor().equals(TextType.body)) {
                 lineEntity.setFont(mainFont);
