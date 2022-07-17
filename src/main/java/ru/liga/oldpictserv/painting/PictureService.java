@@ -16,7 +16,6 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.LinkedList;
 import java.util.List;
 
 import static ru.liga.oldpictserv.constant.ConstantUtil.BACKGROUND_PATH;
@@ -34,7 +33,6 @@ public class PictureService {
     private final CreatingLineBreakMeasurer creatingLineBreakMeasurer;
     private final ChoosingFont choosingFont;
     private final TempImageEntity tempImageEntity;
-    private List<LineEntity> lineEntityList = new LinkedList();
 
     @Autowired
     public PictureService(CreatingFont creatingFont, ParseText parseText, CreatingTextLayout creatingTextLayout, CreatingLineBreakMeasurer creatingLineBreakMeasurer, ChoosingFont choosingFont, TempImageEntity tempImageEntity) {
@@ -83,10 +81,10 @@ public class PictureService {
                 RenderingHints.KEY_TEXT_ANTIALIASING,
                 RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
         FontRenderContext frc = g2d.getFontRenderContext();
-        lineEntityList = parseText.getLineEntityListByText(text);
-        creatingFont.fillLinesEntityByMainFont(lineEntityList);//todo констнутор
         final int breakWidth = image.getWidth() - PADDING;
         final int breakHeight = image.getHeight();
+        List<LineEntity> lineEntityList = parseText.getLineEntityListByText(text);
+        creatingFont.fillLinesEntityByMainFont(lineEntityList);
         creatingLineBreakMeasurer.fillLineEntityByLineBreakMeasurer(lineEntityList, frc);
         creatingTextLayout.fillLineEntityByTextLayout(lineEntityList, breakWidth);
         choosingFont.autoChoosingFont(lineEntityList, breakHeight);
