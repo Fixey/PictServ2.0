@@ -1,8 +1,11 @@
 package ru.liga.oldpictserv.exception;
 
-public class ParseTextException extends RuntimeException {
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
+public class ParseTextException extends ResponseStatusException {
     public ParseTextException() {
-        super("Can't parse text!");
+        super(HttpStatus.NOT_FOUND, "Can't parse text!");
     }
 }
 

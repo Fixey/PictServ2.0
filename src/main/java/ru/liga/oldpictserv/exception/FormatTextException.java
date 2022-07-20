@@ -1,7 +1,10 @@
 package ru.liga.oldpictserv.exception;
 
-public class FormatTextException extends RuntimeException {
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
+public class FormatTextException extends ResponseStatusException {
     public FormatTextException() {
-        super("Text has to contain hyphen or several words!");
+        super(HttpStatus.NOT_FOUND, "Text has to contain hyphen or several words!");
     }
 }

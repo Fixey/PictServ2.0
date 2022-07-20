@@ -1,7 +1,10 @@
 package ru.liga.oldpictserv.exception;
 
-public class EmptyTextException extends RuntimeException {
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
+public class EmptyTextException extends ResponseStatusException {
     public EmptyTextException() {
-        super("Text is empty!");
+        super(HttpStatus.NOT_FOUND, "Text is empty!");
     }
 }
