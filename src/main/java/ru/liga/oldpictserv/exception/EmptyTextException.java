@@ -5,6 +5,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 public class EmptyTextException extends ResponseStatusException {
     public EmptyTextException() {
-        super(HttpStatus.NOT_FOUND, "Text is empty!");
+        super(HttpStatus.BAD_REQUEST, "Text is empty!");
     }
 }

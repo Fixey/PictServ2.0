@@ -5,7 +5,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 public class ParseTextException extends ResponseStatusException {
     public ParseTextException() {
-        super(HttpStatus.NOT_FOUND, "Can't parse text!");
+        super(HttpStatus.BAD_REQUEST, "Can't parse text!");
     }
 }
 
