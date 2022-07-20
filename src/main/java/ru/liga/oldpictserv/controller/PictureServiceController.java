@@ -2,6 +2,7 @@ package ru.liga.oldpictserv.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.liga.oldpictserv.entity.TempImageEntity;
 import ru.liga.oldpictserv.entity.TextEntity;
@@ -28,7 +29,7 @@ public class PictureServiceController {
      * @param textEntity текст
      * @return String Картинка
      */
-    @PostMapping(value = "/pict")
+    @PostMapping(value = "/pict", produces = MediaType.IMAGE_JPEG_VALUE)
     public @ResponseBody byte[] sendImage(@RequestBody TextEntity textEntity) {
         log.info("Receive POST Request");
         pictureService.createPicture(textEntity.getText());
